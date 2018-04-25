@@ -9,6 +9,25 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
+  <script>
+    function nodeToggle(arrowObject){
+
+      var arrowParent = arrowObject.parentNode;
+
+      var oInput = document.getElementById(arrowParent.id).childNodes;
+      for(i = 0; i < oInput.length; i++){
+          if(oInput[i].id.includes("hideDiv")){
+            if (oInput[i].style.display === "none") {
+              oInput[i].style.display = "block";
+            } else {
+              oInput[i].style.display = "none";
+            }
+          }else{
+
+          };
+      };
+    }
+  </script>
   <app-root></app-root>
 </body>
 </html>

@@ -22,25 +22,42 @@ h1{
     
 }
 
+.hamburger {
+  width: 35px;
+  height: 5px;
+  background-color: #ff9100;
+  margin: 6px 0;
+}
+
+.hamburgerDiv {
+  padding: 2%;
+  &:hover{
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
 :host ::ng-deep .btn {
     background-color: #4CAF50; 
     border: none;
     color: white;
     padding: 15px 32px;
-    text-align: center;
+    //text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    &:hover{
-        cursor: pointer;
-    }
+    text-transform: inherit;
+}
+
+:host ::ng-deep .color{
+  color: #ff9100;
 }
 
 :host ::ng-deep [class*="icono"] {
     position: relative;
     display: inline-block;
-    vertical-align: text-bottom;
-    color: #666;
+    vertical-align: middle;
+    color: #ff9100;
     box-sizing: border-box;
     &:after, &:before {
       content: "";
@@ -67,8 +84,14 @@ h1{
         opacity: 0.5;
         cursor: pointer;
     }
+    &:after{
+      transform: rotate(45deg);
+    }
     &[class*="-left"]{
       transform: rotate(45deg);
+      &:hover{
+        transform: rotate(135deg);
+      }
       &[class*="-up"]{
         transform: none;
       }

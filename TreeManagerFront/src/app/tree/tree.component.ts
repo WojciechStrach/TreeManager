@@ -20,6 +20,8 @@ export class TreeComponent implements OnInit {
     this.loadTreesAndNodes();
   }
 
+
+
   loadTreesAndNodes() {
 
     document.getElementById('tree').innerHTML = '';
@@ -67,9 +69,12 @@ export class TreeComponent implements OnInit {
 
 
                   const rootDiv = document.createElement('div');
+                  rootDiv.id = 'hideDiv' + htmlData.Id;
 
-                  rootDiv.innerHTML = '<div style="text-align:left" class="col-md-12" id="' +
-                   htmlData.Id + '"><i class="icono-arrow1-left"></i><button class="btn" type="text">'
+                  rootDiv.innerHTML = '<div style="text-align:left;padding-top:50px" class="col-md-12" id="' +
+                   htmlData.Id +
+                   '"><i onclick="nodeToggle(this)" id="arrow' + htmlData.Id +
+                   '"  class="icono-arrow1-left"></i><button class="btn" type="text">'
                    + htmlData.Label +
                    '</button></div>';
 
@@ -84,9 +89,11 @@ export class TreeComponent implements OnInit {
               } else {
 
                 const nodeDiv = document.createElement('div');
+                nodeDiv.id = 'hideDiv' + htmlData.Id;
+                nodeDiv.style.display = 'none';
 
-                nodeDiv.innerHTML = '<div style="padding-left:5%" id="' + htmlData.Id +
-                '" class="col-md-12"><i class="icono-arrow1-left"></i><button class="btn" type="text">'
+                nodeDiv.innerHTML = '<div style="padding-left:50px;" id="' + htmlData.Id +
+                '" class="col-md-12"><i onclick="nodeToggle(this)" class="icono-arrow1-left"></i><button class="btn" type="text">'
                 + htmlData.Label + '</button></div>';
 
                 document.getElementById(htmlData.Ancestor).appendChild(nodeDiv);
@@ -104,5 +111,7 @@ export class TreeComponent implements OnInit {
     });
 
   }
+
+
 
 }
