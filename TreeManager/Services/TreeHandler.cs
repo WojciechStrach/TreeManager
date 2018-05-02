@@ -127,22 +127,100 @@ namespace TreeManager.Services
 
         public bool AddNewTree(String treeName)
         {
-            return false;
+            try
+            {
+                database.Insert("INSERT INTO `treelist`(`TreeName`) VALUES(" + '"' + treeName + '"' + ")");
+                return true;
+            }
+            catch(Exception e)
+            {
+                Debug.Print(e.StackTrace);
+                return false;
+            }
         }
 
-        public bool EditTreeName(String oldName, String newName)
+        public bool EditTreeName(Int32 treeId, String newName)
         {
-            return false;
+            try
+            {
+                database.Update("UPDATE `treelist` SET `TreeName`= " + '"' + newName + '"' + " WHERE ID = " + treeId);
+                return true;
+            }catch(Exception e)
+            {
+                Debug.Print(e.StackTrace);
+                return false;
+            }
+        }
+
+        public bool DeleteTree(Int32 treeId)
+        {
+            try
+            {
+                database.Delete("DELETE FROM `nodelist` WHERE ASSIGNMENT = " + treeId);
+                database.Delete("DELETE FROM `treelist` WHERE ID = " + treeId);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.StackTrace);
+                return false;
+            }
         }
     
-        public bool AddNewNode(String label, Int32 ancestor, Int32 assignment)
+        public bool AddNewNode(String label, Int32? ancestor, Int32 assignment)
         {
-            return false;
+            try
+            {
+                database.Insert("INSERT INTO `nodelist`(`LABEL`,`ANCESTOR`,`ASSIGNMENT`) VALUES(" + '"' + label + '"' + ',' + '"' + ancestor + '"' + ',' + '"' + assignment + '"' + ")");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.StackTrace);
+                return false;
+            }
         }
 
-        public bool EditNode(String nodeLabel, String newLabel, Int32 newAncestor, Int32 newAssignment)
+        public bool EditNodeLabel(Int32 nodeId, String newLabel)
         {
-            return false; 
+            try
+            {
+                database.Update("UPDATE `nodelist` SET `LABEL`= " + '"' + newLabel + '"' + " WHERE ID = " + nodeId);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.StackTrace);
+                return false;
+            }
+        }
+
+        public bool DeleteNode(Int32 nodeId)
+        {
+            try
+            {
+                database.Delete("DELETE FROM `nodelist` WHERE ID = " + nodeId);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.StackTrace);
+                return false;
+            }
+        }
+
+        public bool MoveNode(Int32 nodeId, Int32 newAncestor)
+        {
+            try
+            {
+                database.Update("UPDATE `nodelist` SET `ANCESTOR`= " + '"' + newAncestor + '"' + " WHERE ID = " + nodeId);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.StackTrace);
+                return false;
+            }
         }
     }
 }

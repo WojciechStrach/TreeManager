@@ -10,10 +10,6 @@
 </div>
 
 
-<!-- <button type="button" class="fixed-top btn btn-primary waves-light" data-toggle="modal" data-target="#menu" (click)="fluid.show()" mdbWavesEffect>
-    Menu
-</button> -->
-
 <div class="fixed-top hamburgerDiv" (click)="fluid.show()">
     <div class="hamburger"></div>
     <div class="hamburger"></div>
@@ -30,44 +26,258 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente magnam, sunt, ea dolore
-                    eum quod. Minima fugiat enim aut soluta est reprehenderit reiciendis quos, qui, amet
-                    possimus laborum assumenda voluptate.
-                </p>
-
-                <ul class="list-group z-depth-0">
-                    <li class="list-group-item justify-content-between">
-                        Cras justo odio
-                        <span class="badge badge-primary badge-pill">14</span>
-                    </li>
-                    <li class="list-group-item justify-content-between">
-                        Dapibus ac facilisis in
-                        <span class="badge badge-primary badge-pill">2</span>
-                    </li>
-                    <li class="list-group-item justify-content-between">
-                        Morbi leo risus
-                        <span class="badge badge-primary badge-pill">1</span>
-                    </li>
-                    <li class="list-group-item justify-content-between">
-                        Cras justo odio
-                        <span class="badge badge-primary badge-pill">14</span>
-                    </li>
-                    <li class="list-group-item justify-content-between">
-                        Dapibus ac facilisis in
-                        <span class="badge badge-primary badge-pill">2</span>
-                    </li>
-                    <li class="list-group-item justify-content-between">
-                        Morbi leo risus
-                        <span class="badge badge-primary badge-pill">1</span>
-                    </li>
-                </ul>
+                <div class="btn-group" dropdown>
+                    <button dropdownToggle type="button" class="btn btn-warning dropdown-toggle waves-light" mdbWavesEffect>
+                        Drzewa
+                    </button>
+                
+                    <div class="dropdown-menu dropdown-primary">
+                        <a (click)="addTree.show()"  class="dropdown-item" href="#">Dodaj nowe drzewo</a>
+                        <a (click)="editTreeNameModal.show();editGetListOfAllTrees()"  class="dropdown-item" href="#">Edytuj nazwę drzewa</a>
+                        <a (click)="deleteTreeModal.show();deleteGetListOfAllTrees()"  class="dropdown-item" href="#">Usuń drzewo</a>
+                    </div>
+                </div>
+                <div class="btn-group" dropdown>
+                    <button dropdownToggle type="button" class="btn btn-warning dropdown-toggle waves-light" mdbWavesEffect>
+                        Węzły
+                    </button>
+                
+                    <div class="dropdown-menu dropdown-primary">
+                        <a (click)="addNewNodeModal.show();getAddNodeListOfAllTrees()"  class="dropdown-item" href="#">Dodaj nowy węzeł</a>
+                        <a class="dropdown-item" href="#">Edytuj nazwę węzła</a>
+                        <a class="dropdown-item" href="#">Usuń węzeł</a>
+                        <a class="dropdown-item" href="#">Przenieś węzeł w inne miejsce</a>
+                    </div>
+                </div>
+                       
             </div>
             <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary waves-light" data-dismiss="modal" (click)="fluid.hide()" mdbWavesEffect>Close</button>
-                <button type="button" class="btn btn-primary waves-light" mdbWavesEffect>Save changes</button>
+                <button type="button" class="btn btn-warning waves-light" data-dismiss="modal" (click)="fluid.hide()" mdbWavesEffect>Close</button>
             </div>
         </div>
     </div>
 </div>
 
+<button type="button" id="addTreeModalCloser" style="display: none;"  class="btn btn-primary waves-light" (click)="addTree.hide()" mdbWavesEffect>Central Modal</button>
 
+<div mdbModal #addTree="mdb-modal" class="modal fade" id="addTreeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        
+        <div class="modal-content">
+
+            
+            <div class="modal-header light-blue darken-3 white-text">
+                <h4 class="title"><i class="fa fa-newspaper-o"></i>Dodaj nowe drzewo</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="addTree.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body mb-0">
+
+                <div class="md-form form-sm">
+                    <input [(ngModel)]="newTreeName"  mdbInputDirective type="text" id="form27" class="form-control">
+                    <label for="form27">Wprowadź nazwę drzewa</label>
+                </div>
+
+                <div class="text-center mt-1-half">
+                    <button (click)="addNewTree()" class="btn btn-info mb-1 waves-light" mdbWavesEffect>Zatwierdź i dodaj</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" id="succesModalOpener" style="display: none;"  class="btn btn-primary waves-light" (click)="succesModal.show()" mdbWavesEffect>Modal</button>
+
+<div mdbModal #succesModal="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-success" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead">Sukces</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="succesModal.hide()">
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                    <p>Operacja zakończyła się sukcesem</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a type="button" class="btn btn-success waves-light" data-dismiss="modal" (click)="succesModal.hide()" mdbWavesEffect>Zamknij</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" id="errorModalOpener" style="display: none;"  class="btn btn-primary waves-light" (click)="errorModal.show()" mdbWavesEffect>Central Modal</button>
+
+<div mdbModal #errorModal="mdb-modal" class="modal fade" id="centralModalError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead">Błąd</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="errorModal.hide()">
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                    <p>Operacja nie powiodła się, spróbuj jeszcze raz</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a type="button" class="btn btn-danger waves-light" data-dismiss="modal" (click)="errorModal.hide()" mdbWavesEffect>Zamknij</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" id="editTreeNameModalCloser" style="display: none;"  class="btn btn-primary waves-light" (click)="editTreeNameModal.hide()" mdbWavesEffect>Central Modal</button>
+
+<div mdbModal #editTreeNameModal="mdb-modal" class="modal fade" id="editTreeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        
+        <div class="modal-content">
+
+            
+            <div class="modal-header light-blue darken-3 white-text">
+                <h4 class="title"><i class="fa fa-newspaper-o"></i>Edytuj nazwę drzewa</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="editTreeNameModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body mb-0">
+
+                    <div class="btn-group" dropdown>
+                            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                                Lista drzew
+                            </button>
+                        
+                            <div class="dropdown-menu dropdown-primary">
+                                <a *ngFor="let tree of editlistOfAllTrees" (click)="setEditTreeNameIdAndSelectedTreeName(tree.id,tree.Name)" class="dropdown-item" href="#">{{tree.Name}}</a>
+                            </div>
+                        </div>
+
+                <div class="md-form form-sm">
+                    <input [(ngModel)]="editSelectedTreeName"  mdbInputDirective type="text" id="form30" class="form-control" disabled>
+                    <label class="disabled" for="form30">Wybierz drzewo z listy aby edytować jego nazwę</label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <input [(ngModel)]="editTreeNewName"  mdbInputDirective type="text" id="form28" class="form-control">
+                    <label class="disabled" for="form28">Wprowadź nową nazwę dla wybranego drzewa</label>
+                </div>
+
+                <div class="text-center mt-1-half">
+                    <button (click)="editTreeName()" class="btn btn-info mb-1 waves-light" mdbWavesEffect>Zatwierdź i edytuj nazwę drzewa</button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+ </div>
+
+<button type="button" id="deleteTreeModalCloser" style="display: none;"  class="btn btn-primary waves-light" (click)="deleteTreeModal.hide()" mdbWavesEffect>Central Modal</button>
+
+<div mdbModal #deleteTreeModal="mdb-modal" class="modal fade" id="editTreeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        
+        <div class="modal-content">
+
+            
+            <div class="modal-header light-blue darken-3 white-text">
+                <h4 class="title"><i class="fa fa-newspaper-o"></i>Usuń drzewo</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="deleteTreeModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body mb-0">
+
+                    <div class="btn-group" dropdown>
+                            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                                Lista drzew
+                            </button>
+                        
+                            <div class="dropdown-menu dropdown-primary">
+                                <a *ngFor="let tree of deletelistOfAllTrees" (click)="setDeleteTreeIdAndSelectedTreeName(tree.id,tree.Name)" class="dropdown-item" href="#">{{tree.Name}}</a>
+                            </div>
+                        </div>
+
+                <div class="md-form form-sm">
+                    <input [(ngModel)]="deleteSelectedTree"  mdbInputDirective type="text" id="form27" class="form-control" disabled>
+                    <label class="disabled" for="form27">Wybierz drzewo z listy aby je usunąć</label>
+                </div>
+
+                <div class="text-center mt-1-half">
+                    <button (click)="deleteTree()" class="btn btn-info mb-1 waves-light" mdbWavesEffect>Zatwierdź i usuń drzewo</button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+ </div>
+
+ <button type="button" id="addNewNodeModalCloser" style="display: none;"  class="btn btn-primary waves-light" (click)="addNewNodeModal.hide()" mdbWavesEffect>Central Modal</button>
+
+<div mdbModal #addNewNodeModal="mdb-modal" class="modal fade" id="editTreeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        
+        <div class="modal-content">
+
+            
+            <div class="modal-header light-blue darken-3 white-text">
+                <h4 class="title"><i class="fa fa-newspaper-o"></i>Dodaj nowy węzeł</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="addNewNodeModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body mb-0">
+                <p>Aby dodać nowy węzeł wybierz z list drzewo do którego ma
+                     być przypisany a następnie węzeł nadrzędny w stosunku do nowego węzła. Postaw pusty węzeł nadrzędny aby dodać korzeń</p>
+
+                    <div class="btn-group" dropdown>
+                            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                                Lista drzew
+                            </button>
+                        
+                            <div class="dropdown-menu dropdown-primary">
+                                <a *ngFor="let tree of addNodeListOfAllTrees" (click)="setAddNewNodeAssignmentTreeAndSelectedTreeName(tree.id,tree.Name)" class="dropdown-item" href="#">{{tree.Name}}</a>
+                            </div>
+                        </div>
+
+                <div class="md-form form-sm">
+                    <input [(ngModel)]="addNodeSelectedTreeName"  mdbInputDirective type="text" id="form31" class="form-control" disabled>
+                    <label class="disabled" for="form31">Wybierz drzewo do którego przypisany zostanie węzeł</label>
+                </div>
+
+                <div class="btn-group dropup" dropdown>
+                        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+                            Lista węzłów wybranego drzewa
+                        </button>
+                    
+                        <div class="dropdown-menu dropdown-primary force-scroll">
+                            <a *ngFor="let node of addNodeListOfAllNodesOfTree" (click)="setAddNewNodeAncestorTreeAndSelectedNodeName(node.Id,node.Label)" class="dropdown-item" href="#">{{node.Label}}</a>
+                        </div>
+                    </div>
+
+            <div class="md-form form-sm">
+                <input [(ngModel)]="addNodeSelectedAncestorName"  mdbInputDirective type="text" id="form32" class="form-control" disabled>
+                <label class="disabled" for="form32">Wybierz węzeł nadrzędny</label>
+            </div>
+            <div class="md-form form-sm">
+                <input [(ngModel)]="addNodeNewNodeName"  mdbInputDirective type="text" id="form33" class="form-control">
+                <label class="" for="form33">Wprowadź nazwę węzła</label>
+            </div>
+
+                <div class="text-center mt-1-half">
+                    <button (click)="addNewNode()" class="btn btn-info mb-1 waves-light" mdbWavesEffect>Zatwierdź i dodaj nowy węzeł</button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+ </div>
